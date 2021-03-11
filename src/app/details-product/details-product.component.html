@@ -1,0 +1,32 @@
+<!-- <select [(ngModel)]="selection" (change)="getChoix()">
+  <option *ngFor="let p of produits" [value]="p.id">{{ p.name }}</option>
+</select> -->
+
+<input type="text" (keyup)="getCorrespondance($event)" id="choixProduit" /><!-- list="autocompleteListe" -->
+<!-- <datalist id="autocompleteListe">
+  <option *ngFor="let cL of correspondanceListe" value="{{ cL.id }} - {{ cL.name }}">
+    {{ cL.name }}
+  </option>
+</datalist> -->
+
+<div id="correspondance">
+  <ul>
+    <li *ngFor="let cl of correspondanceListe" (click)="getChoix(cl.id)">{{ cl.name }} ({{ cl.id }})</li>
+  </ul>
+</div>
+
+<!-- <p>Id de la sélection : {{ selection }}</p> -->
+
+<h2>Le détail du produit sélectionné :</h2>
+<div *ngIf="produit; else elseBlock">
+  <ul>
+    <li>Nom : {{ produit.name }}</li>
+    <li>Prix : {{ produit.price }}€</li>
+    <li *ngIf="produit.sale">Prix en promotion : {{ produit.price_on_sale }}</li>
+    <li>Pourcentage de promotion : {{ produit.discount }}%</li>
+    <li>Quantité en stock : {{ produit.quantity_stock }}</li>
+    <li>Nombre de vendus : {{ produit.quantity_sold }}</li>
+    <li>Commentaires : {{ produit.comments }}</li>
+  </ul>
+</div>
+<ng-template #elseBlock>Aucun produit sélectionné.</ng-template>

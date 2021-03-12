@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from "../services/products.service";
+import { StockService } from '../services/stock.service';
 
 @Component({
   selector: 'app-details-product',
@@ -8,14 +9,12 @@ import { ProductsService } from "../services/products.service";
 })
 export class DetailsProductComponent implements OnInit {
 
-  selection: number;
   produits: any;
   produit: any;
   correspondanceListe: any = [] ;
+  unite: number;
 
-  lastkeydown: number = 0;
-
-  constructor(public produitsService: ProductsService) { this.produits = []; }
+  constructor(public produitsService: ProductsService, public stockService: StockService) { this.produits = []; }
 
   ngOnInit(): void {
     this.produitsService.getData().subscribe(
@@ -33,8 +32,6 @@ export class DetailsProductComponent implements OnInit {
     this.correspondanceListe = [];
     const texte : string = event.target.value;
 
-    // const limite = event.timeStamp - this.lastkeydown;
-
     if (texte.length > 2) {
       this.produits.forEach(element => {
         const verif : string = element.name;
@@ -42,7 +39,20 @@ export class DetailsProductComponent implements OnInit {
       });
     }
 
-    this.lastkeydown = event.timeStamp;
     console.log(this.correspondanceListe);
+  }
+
+  plus(id: number, unite: number) {
+    this.stockService.augmenterStock(id, unite).subscribe(
+      (prod) => { this.produit = prod; },
+      (err) => { alert("Problème API : " + err.message); }
+    );
+  }
+  
+  moins(id: number, unite: number) {
+    this.stockService.diminuerStock(id, unite).subscribe(
+      (prod) => { this.produit = prod },
+      (err) => { alert("Problème API : " + err.message); }
+    );
   }
 }

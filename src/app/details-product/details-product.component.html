@@ -24,9 +24,17 @@
     <li>Prix : {{ produit.price }}€</li>
     <li *ngIf="produit.sale">Prix en promotion : {{ produit.price_on_sale }}</li>
     <li>Pourcentage de promotion : {{ produit.discount }}%</li>
-    <li>Quantité en stock : {{ produit.quantity_stock }}</li>
+    <li>Quantité en stock : {{ produit.qtyInStock }}</li>
     <li>Nombre de vendus : {{ produit.quantity_sold }}</li>
     <li>Commentaires : {{ produit.comments }}</li>
   </ul>
+
+  <label for="unite">Unités :</label>
+  <input type="number" name="unite" id="unite" min="0" [(ngModel)]="unite" />
+
+  <button (click)="plus(produit.id, unite)">Augmenter Stock</button>
+  <button (click)="moins(produit.id, unite)" [disabled]="unite > produit.qtyInStock">Diminuer Stock</button>
+
+  <p *ngIf="unite < 0">La valeur ne peut pas être négative.</p>
 </div>
 <ng-template #elseBlock>Aucun produit sélectionné.</ng-template>

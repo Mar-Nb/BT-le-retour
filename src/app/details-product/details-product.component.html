@@ -1,21 +1,10 @@
-<!-- <select [(ngModel)]="selection" (change)="getChoix()">
-  <option *ngFor="let p of produits" [value]="p.id">{{ p.name }}</option>
-</select> -->
-
 <input type="text" (keyup)="getCorrespondance($event)" id="choixProduit" /><!-- list="autocompleteListe" -->
-<!-- <datalist id="autocompleteListe">
-  <option *ngFor="let cL of correspondanceListe" value="{{ cL.id }} - {{ cL.name }}">
-    {{ cL.name }}
-  </option>
-</datalist> -->
 
 <div id="correspondance">
   <ul>
     <li *ngFor="let cl of correspondanceListe" (click)="getChoix(cl.id)">{{ cl.name }} ({{ cl.id }})</li>
   </ul>
 </div>
-
-<!-- <p>Id de la sélection : {{ selection }}</p> -->
 
 <h2>Le détail du produit sélectionné :</h2>
 <div *ngIf="produit; else elseBlock">
@@ -24,7 +13,7 @@
     <li>Prix : {{ produit.price }}€</li>
     <li *ngIf="produit.sale">Prix en promotion : {{ produit.price_on_sale }}</li>
     <li>Pourcentage de promotion : {{ produit.discount }}%</li>
-    <li>Quantité en stock : {{ produit.qtyInStock }}</li>
+    <li>Quantité en stock : {{ produit.quantityInStock }}</li>
     <li>Nombre de vendus : {{ produit.quantity_sold }}</li>
     <li>Commentaires : {{ produit.comments }}</li>
   </ul>
@@ -33,8 +22,15 @@
   <input type="number" name="unite" id="unite" min="0" [(ngModel)]="unite" />
 
   <button (click)="plus(produit.id, unite)">Augmenter Stock</button>
-  <button (click)="moins(produit.id, unite)" [disabled]="unite > produit.qtyInStock">Diminuer Stock</button>
+  <button (click)="moins(produit.id, unite)" [disabled]="unite > produit.quantityInStock">Diminuer Stock</button>
+
+  <br>
+
+  <label for="pourcentPromo">Pourcentage de promotion :</label>
+  <input type="number" name="pourcentPromo" id="pourcentPromo" min="0" max="100" [(ngModel)]="pourcentPromo" />
+
+  <button (click)="promo(produit.id, pourcentPromo)" [disabled]="pourcentPromo == produit.discount">Changer la promotion</button>
 
   <p *ngIf="unite < 0">La valeur ne peut pas être négative.</p>
 </div>
-<ng-template #elseBlock>Aucun produit sélectionné.</ng-template>
+<ng-template #elseBlock><p>Aucun produit sélectionné.</p></ng-template>

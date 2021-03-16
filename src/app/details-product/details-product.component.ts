@@ -14,6 +14,8 @@ export class DetailsProductComponent implements OnInit {
   correspondanceListe: any = [] ;
   unite: number;
 
+  pourcentPromo: number;
+
   constructor(public produitsService: ProductsService, public stockService: StockService) { this.produits = []; }
 
   ngOnInit(): void {
@@ -43,16 +45,38 @@ export class DetailsProductComponent implements OnInit {
   }
 
   plus(id: number, unite: number) {
-    this.stockService.augmenterStock(id, unite).subscribe(
-      (prod) => { this.produit = prod; },
-      (err) => { alert("Problème API : " + err.message); }
-    );
+    if (unite != null) {
+      this.stockService.augmenterStock(id, unite).subscribe(
+        (prod) => { this.produit = prod; },
+        (err) => { alert("Problème API : " + err.message); }
+      );
+    } else {
+      // "unite" est un number, donc du texte dans l'input renvoie null
+      alert("Le stock doit être un nombre.");
+    }
   }
-  
+
   moins(id: number, unite: number) {
-    this.stockService.diminuerStock(id, unite).subscribe(
-      (prod) => { this.produit = prod },
-      (err) => { alert("Problème API : " + err.message); }
-    );
+    if (unite != null) {
+      this.stockService.diminuerStock(id, unite).subscribe(
+        (prod) => { this.produit = prod },
+        (err) => { alert("Problème API : " + err.message); }
+      );
+    } else {
+      // "unite" est un number, donc du texte dans l'input renvoie null
+      alert("Le stock doit être un nombre.");
+    }
+  }
+
+  promo(id: number, newpromo: number) {
+    if (newpromo == null) {
+      // "newpromo" est un number, donc du texte dans l'input renvoie null
+      alert("La promotion doit être un nombre.");
+    } else if (newpromo >= 0 && newpromo <=100) {
+      this.produitsService.setPromotion(id, newpromo).subscribe(
+        (prod) => { this.produit = prod },
+        (err) => { alert("Problème API : " + err.message); }
+      );
+    } else if (newpromo < 0 || newpromo > 100) { alert("La promotion doit être comprise entre 0 et 100."); }
   }
 }

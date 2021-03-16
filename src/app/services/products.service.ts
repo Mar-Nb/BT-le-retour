@@ -12,4 +12,7 @@ export class ProductsService {
 
   getData() { return this.http.get(this.urlApi + "/infoproducts/"); }
 
+  setPromotion(id: number, promo: number) {
+    return this.http.get(this.urlApi + "/putonsale/" + id + "/" + promo + "/")
+  }
 }

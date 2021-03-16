@@ -1,0 +1,85 @@
+<h1>Crustacés</h1>
+
+<table>
+  <tr>
+    <th>Nom</th>
+    <th>Prix</th>
+    <th>Prix en promotion</th>
+    <th>Pourcentage de promotion</th>
+    <th>Quantité en stock</th>
+    <th>Nombres d'articles vendus</th>
+    <th>Commentaires</th>
+    <th>Changer le stock</th>
+  </tr>
+  <tr *ngFor="let c of crustaces; let index = index;">
+    <td>{{ c.name }}</td>
+    <td>{{ c.price }}</td>
+    <td>{{ c.price_on_sale }}</td>
+    <td>{{ c.discount }}</td>
+    <td>{{ c.quantityInStock }}</td>
+    <td>{{ c.quantity_sold }}</td>
+    <td>{{ c.comments }}</td>
+    <td>
+      <input type="number" name="stockCrustace{{ c.id }}" id="stock{{ c.id }}"
+        (focusout)="changerStock('crustace', index, c.id)">
+    </td>
+  </tr>
+</table>
+
+<h1>Fruits de mer</h1>
+
+<table>
+  <tr>
+    <th>Nom</th>
+    <th>Prix</th>
+    <th>Prix en promotion</th>
+    <th>Pourcentage de promotion</th>
+    <th>Quantité en stock</th>
+    <th>Nombres d'articles vendus</th>
+    <th>Commentaires</th>
+    <th>Changer le stock</th>
+  </tr>
+  <tr *ngFor="let fdm of fruitsDeMer; let index = index;">
+    <td>{{ fdm.name }}</td>
+    <td>{{ fdm.price }}</td>
+    <td>{{ fdm.price_on_sale }}</td>
+    <td>{{ fdm.discount }}</td>
+    <td>{{ fdm.quantityInStock }}</td>
+    <td>{{ fdm.quantity_sold }}</td>
+    <td>{{ fdm.comments }}</td>
+    <td>
+      <input type="number" name="stockFdm{{ fdm.id }}" id="stock{{ fdm.id }}"
+        (focusout)="changerStock('fruit', index, fdm.id)">
+    </td>
+  </tr>
+</table>
+
+<h1>Poissons</h1>
+
+<table>
+  <tr>
+    <th>Nom</th>
+    <th>Prix</th>
+    <th>Prix en promotion</th>
+    <th>Pourcentage de promotion</th>
+    <th>Quantité en stock</th>
+    <th>Nombres d'articles vendus</th>
+    <th>Commentaires</th>
+    <th>Changer le stock</th>
+  </tr>
+  <tr *ngFor="let p of poissons; let index = index;">
+    <td>{{ p.name }}</td>
+    <td>{{ p.price }}</td>
+    <td>{{ p.price_on_sale }}</td>
+    <td>{{ p.discount }}</td>
+    <td>{{ p.quantityInStock }}</td>
+    <td>{{ p.quantity_sold }}</td>
+    <td>{{ p.comments }}</td>
+    <td>
+      <input type="number" name="stockPoisson{{ p.id }}" id="stock{{ p.id }}"
+        (focusout)="changerStock('poisson', index, p.id)">
+    </td>
+  </tr>
+</table>
+
+<button type="button" name="button" (click)="rafraichir()">Envoyer données</button>

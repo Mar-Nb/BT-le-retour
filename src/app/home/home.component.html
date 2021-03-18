@@ -1,5 +1,81 @@
-<h1>Ceci est la page d'accueil !</h1>
-<p>Hello World</p>
+<!-- Side Menu  -->
+<div class="column is-variable is-0">
+    <div>
+        <div class="menu-container px-1 has-background-white">
+            <div class="menu-wrapper py-1">
+                <aside class="menu">
+                    <p class="menu-label">
+                      General
+                    </p>
+                    <ul class="menu-list">
+                      <li><a><i class="fas fa-tachometer-alt icon"></i>Dashboard</a></li>
+                      <li><a><i class="fas fa-shopping-cart icon"></i>ShipPoints</a></li>
+                    </ul>
+                    <p class="menu-label">
+                        Transactions
+                    </p>
+                    <ul class="menu-list">
+                      <li>
+                        <ul>
+                          <li><a><i class="fas fa-balance-scale-right icon"></i>Balance</a></li>
+                          <li><a><i class="fas fa-warehouse icon"></i>Stock</a></li>
+                          <li><a><i class="fas fa-hand-holding-usd icon"></i>Impots</a></li>
+                        </ul>
+                      </li>
+                    </ul>
+                    <p class="menu-label">
+                      Administration
+                    </p>
+                    <ul class="menu-list">
+                      <li><a><i class="fas fa-plus icon"></i>Add Quantity</a></li>
+                      <li><a><i class="fas fa-plus icon"></i>Add Promo</a></li>
+                    </ul>
+                  </aside>
+            </div>
 
-<h2>Un produit de notre choix</h2>
-<button><a routerLink="/detailsProduit">Vers la page des détails</a></button>
+        </div>
+
+    </div>
+
+    <!-- title  -->
+    <div class="column is-10-desktop is-offset-2-desktop " id="centre">
+        <div class="p-1">
+            <div class="columns is-variable is-desktop ">
+              <div class="column">
+                <h1 class="title">
+                  Dashboard
+                </h1>
+              </div>
+            </div>
+
+                <!-- Card 1 -->
+            <div class="columns  is-variable is-desktop ">
+                <div class="column ">
+                  <div class="card has-background-primary has-text-white">
+                    <div class="card-header">
+                      <div class="card-header-title has-text-white">
+                        Meilleur Vente
+                      </div>
+                    </div>
+                    <div class="card-content">
+                      <p class="is-size-3">56,590 €</p>
+                    </div>
+                  </div>
+                </div>
+                    <!-- Card 2 -->
+                <div class="column ">
+                    <div class="card has-background-warning has-text-black">
+                      <div class="card-header">
+                        <div class="card-header-title has-text-black is-uppercase">
+                          Chiffre d'Affaire
+                        </div>
+                      </div>
+                      <div class="card-content">
+                        <p class="is-size-3">1200 €</p>
+                      </div>
+                    </div>
+                </div>
+            </div>           
+        </div>
+    </div>
+</div>

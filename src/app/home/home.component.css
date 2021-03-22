@@ -1,0 +1,32 @@
+.px-1,.p-1{
+    padding-right: 0.75rem;
+    padding-left: 0.75rem;
+}
+.py-1,.p-1{
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+}
+.menu-container{
+    position:fixed;
+    bottom: 250px;
+    margin: auto;
+    min-width: 300px;
+    z-index:10;
+    background-color:transparent;
+}
+@media (min-width: 1024px) {
+    .menu-container {
+      width: 16.6667%;
+      min-width: auto;
+      -webkit-transform: translateX(0%);
+              transform: translateX(0%);
+    }
+  }
+
+#centre{
+    padding-top: 50px;
+    left:50%;
+    margin-left:-500px;
+    position:absolute;
+    z-index:1;
+}

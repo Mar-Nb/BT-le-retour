@@ -1,0 +1,57 @@
+<nav class="navbar is-fixed-top is-dark box-shadow-y">
+    <!-- logo -->
+    <div class="navbar-brand">
+      <a class="navbar-item">
+        MY LOGO
+      </a>
+    </div>
+  
+    <!-- menu -->
+    <div class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" routerLink="/">
+            <i class ="fas fa-home icon"></i>
+            Home
+        </a>
+        <a class="navbar-item" routerLink="/detailsProduit">
+            <span class="icon is-small is-left">
+                <i class="fas fa-anchor"></i>
+            </span>
+            Detail Produit
+        </a>
+        <a class="navbar-item" routerLink="/listeProduit">
+            <span class="icon is-small is-left">
+                <i class="fas fa-align-justify"></i>
+            </span>
+            Liste des produits
+        </a>
+      </div>
+
+      <div class="navbar-end">
+        <a class="navbar-item">
+            Notification
+        </a>
+        <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+                Admin
+            </a>
+            <div class="navbar-dropdown is-right">
+                <a class="navbar-item">
+                    Profile
+                </a>
+                <a class="navbar-item">
+                    Settings
+                </a>
+                <hr class="navbar-divider"/>
+                <div class="navbar-item">
+                    <a class="button  is-danger">
+                        <strong>Log Out</strong>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+      </div>
+    </div>
+</nav>

@@ -18,6 +18,13 @@
     <li>Commentaires : {{ produit.comments }}</li>
   </ul>
 
+  <label for="operation">Type d'opération :</label>
+  <select name="operation" id="operation" [(ngModel)]="operation">
+    <option value="ajout">Ajout</option>
+    <option value="vente">Retrait par vente</option>
+    <option value="invendu">Invendu(s)</option>
+  </select>
+
   <label for="unite">Unités :</label>
   <input type="number" name="unite" id="unite" min="0" [(ngModel)]="unite" />
 

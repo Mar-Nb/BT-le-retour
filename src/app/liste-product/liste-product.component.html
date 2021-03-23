@@ -9,6 +9,7 @@
     <th>Quantité en stock</th>
     <th>Nombres d'articles vendus</th>
     <th>Commentaires</th>
+    <th>Type de l'opération</th>
     <th>Changer le stock</th>
     <th>Changer la promotion</th>
   </tr>
@@ -21,8 +22,16 @@
     <td>{{ c.quantity_sold }}</td>
     <td>{{ c.comments }}</td>
     <td>
+      <select name="operation{{ c.tigID }}" id="operation{{ c.tigID }}"
+      (change)="nouvelleTransaction(c.id, c.tigID, c.price)">
+        <option value="ajout">Ajout</option>
+        <option value="vente">Retrait par vente</option>
+        <option value="invendu">Invendu(s)</option>
+      </select>
+    </td>
+    <td>
       <input type="number" name="stockCrustace{{ c.id }}" id="stock{{ c.id }}"
-        (focusout)="stockModif(c.id, c.quantityInStock)">
+        (focusout)="stockModif(c.id, c.quantityInStock); nouvelleTransaction(c.id, c.tigID, c.price)">
     </td>
     <td>
       <input type="number" name="pourcentPromo{{ c.id }}" id="promo{{ c.id }}"
@@ -42,6 +51,7 @@
     <th>Quantité en stock</th>
     <th>Nombres d'articles vendus</th>
     <th>Commentaires</th>
+    <th>Type de l'opération</th>
     <th>Changer le stock</th>
     <th>Changer la promotion</th>
   </tr>
@@ -54,8 +64,16 @@
     <td>{{ fdm.quantity_sold }}</td>
     <td>{{ fdm.comments }}</td>
     <td>
+      <select name="operation{{ fdm.tigID }}" id="operation{{ fdm.tigID }}"
+      (change)="nouvelleTransaction(fdm.id, fdm.tigID, fdm.price)">
+        <option value="ajout">Ajout</option>
+        <option value="vente">Retrait par vente</option>
+        <option value="invendu">Invendu(s)</option>
+      </select>
+    </td>
+    <td>
       <input type="number" name="stockFdm{{ fdm.id }}" id="stock{{ fdm.id }}"
-        (focusout)="stockModif(fdm.id, fdm.quantityInStock)">
+        (focusout)="stockModif(fdm.id, fdm.quantityInStock); nouvelleTransaction(fdm.id, fdm.tigID, fdm.price)">
     </td>
     <td>
       <input type="number" name="pourcentPromo{{ fdm.id }}" id="promo{{ fdm.id }}"
@@ -75,6 +93,7 @@
     <th>Quantité en stock</th>
     <th>Nombres d'articles vendus</th>
     <th>Commentaires</th>
+    <th>Type de l'opération</th>
     <th>Changer le stock</th>
     <th>Changer la promotion</th>
   </tr>
@@ -87,8 +106,16 @@
     <td>{{ p.quantity_sold }}</td>
     <td>{{ p.comments }}</td>
     <td>
+      <select name="operation{{ p.tigID }}" id="operation{{ p.tigID }}"
+      (change)="nouvelleTransaction(p.id, p.tigID, p.price)">
+        <option value="ajout">Ajout</option>
+        <option value="vente">Retrait par vente</option>
+        <option value="invendu">Invendu(s)</option>
+      </select>
+    </td>
+    <td>
       <input type="number" name="stockPoisson{{ p.id }}" id="stock{{ p.id }}"
-        (focusout)="stockModif(p.id, p.quantityInStock)">
+        (focusout)="stockModif(p.id, p.quantityInStock); nouvelleTransaction(p.id, p.tigID, p.price)">
     </td>
     <td>
       <input type="number" name="pourcentPromo{{ p.id }}" id="promo{{ p.id }}"
@@ -98,3 +125,4 @@
 </table>
 
 <button type="button" name="button" (click)="envoyerDonnees()">Envoyer données</button>
+<button type="button" name="button2" (click)="testTransac()">testTransac</button>

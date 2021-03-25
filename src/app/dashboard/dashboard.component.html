@@ -1,0 +1,69 @@
+<div class="column is-half-is-offset-one-quarter">
+  <div class="tabs is-centered is-boxed">
+    <ul>
+      <li id="tab-annee" class="is-active" (click)="toggleCurrent($event, 'annee')"><a>Année</a></li>
+      <li id="tab-trimestre" (click)="toggleCurrent($event, 'trimestre')"><a>Trimestre</a></li>
+      <li id="tab-mois" (click)="toggleCurrent($event, 'mois')"><a>Mois</a></li>
+      <li id="tab-semaine" (click)="toggleCurrent($event, 'semaine')"><a>Semaines</a></li>
+      <li id="tab-jour" (click)="toggleCurrent($event, 'jour')"><a>Jour</a></li>
+    </ul>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Année, mois et jour</label>
+    </div>
+    <div class="field-body">
+
+      <div class="field">
+        <p class="control is-expanded">
+          <input id="field-annee" type="number" min="0" class="input" placeholder="Année" [(ngModel)]="selectAnnee">
+        </p>
+      </div>
+
+      <div class="select" style="margin-right: 0.75rem;">
+        <select [(ngModel)]="selectMois" [disabled]="current.annee || current.trimestre">
+          <option *ngFor="let mois of tabMois; let index = index;" value="{{ index + 1 }}">
+            {{ mois }}
+          </option>
+        </select>
+      </div>
+
+      <div class="field">
+        <p class="control is-expanded">
+          <input id="field-jour" type="number" min="0" max="31"
+            class="input" placeholder="Jour" [disabled]="! current.jour" [(ngModel)]="selectJour">
+        </p>
+      </div>
+    </div>
+
+    <button class="button is-primary" (click)="afficheSelection()">Afficher</button>
+  </div>
+
+  <div id="annee" class="content">
+    <p>"Année"</p>
+    <div class="columns">
+      <div class="column is-half is-offset-one-quarter">
+        <app-bar-chart
+          [barChartLabels]="tabMois"
+          [barChartData]="dataAnnee"></app-bar-chart>
+      </div>
+    </div>
+  </div>
+
+  <div id="trimestre" class="content hidden">
+    <p>"Trimestre"</p>
+  </div>
+
+  <div id="mois" class="content hidden">
+    <p>"Mois"</p>
+  </div>
+
+  <div id="semaine" class="content hidden">
+    <p>"Semaine"</p>
+  </div>
+
+  <div id="jour" class="content hidden">
+    <p>"Jour"</p>
+  </div>
+</div>

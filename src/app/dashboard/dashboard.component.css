@@ -1,0 +1,7 @@
+.hidden {
+  display: none;
+}
+
+div.field.is-horizontal {
+  max-width: 75%;
+}

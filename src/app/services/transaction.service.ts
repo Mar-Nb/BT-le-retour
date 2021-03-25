@@ -14,4 +14,20 @@ export class TransactionService {
     return this.http.get(
       this.urlApi + "/transaction/" + tigID + "/" + type + "/" + price + "/" + quantity + "/");
   }
+
+  getTransactionAnnee(annee: number) {
+    return this.http.get(this.urlApi + "/transaction/getannee/" + annee + "/");
+  }
+
+  getTransactionTrimestre(annee: number, trimestre: number) {
+    return this.http.get(this.urlApi + "/transaction/gettrimestre/" + annee + "/" + trimestre + "/");
+  }
+
+  getTransactionMois(annee: number, mois: number) {
+    return this.http.get(this.urlApi + "/transaction/getmois/" + annee + "/" + mois + "/");
+  }
+
+  getTransactionJour(annee: number, mois: number, jour: number) {
+    return this.http.get(this.urlApi + "/transaction/getjour/" + annee + "/" + mois + "/" + jour + "/");
+  }
 }

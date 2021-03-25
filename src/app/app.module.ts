@@ -16,6 +16,7 @@ import { BarChartComponent } from './chart/bar-chart/bar-chart.component';
 import { DonutChartComponent } from './chart/donut-chart/donut-chart.component';
 import { PieChartComponent } from './chart/pie-chart/pie-chart.component';
 import { LineChartComponent } from './chart/line-chart/line-chart.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { LineChartComponent } from './chart/line-chart/line-chart.component';
     BarChartComponent,
     DonutChartComponent,
     PieChartComponent,
-    LineChartComponent
+    LineChartComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

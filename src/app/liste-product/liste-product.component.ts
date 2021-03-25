@@ -73,12 +73,12 @@ export class ListeProductComponent implements OnInit {
     for (let id in this.modifStock) {
       const val = this.modifStock[id]["val"];
       const oldval = this.modifStock[id]["oldval"];
-      if (val < 0 && -val <= oldval && Math.trunc(val) == val){ 
+      if (val < 0 && -val <= oldval){ 
         this.stockService.diminuerStock(parseInt(id), -val).subscribe();
         const error = document.getElementById('errorStock'+id);
         error.textContent = "";
       }
-      else if (val > 0 && val < 100 && Math.trunc(val) == val) { 
+      else if (val > 0 && val < 100) { 
         this.stockService.augmenterStock(parseInt(id), val).subscribe();
         const error = document.getElementById('errorStock'+id);
         error.textContent = "";

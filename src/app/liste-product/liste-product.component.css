@@ -1,1 +1,35 @@
-table { text-align: center; }
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css";
+
+table{ 
+    text-align: center;
+    table-layout: auto;
+}
+button{
+    position: center;
+}
+
+th{
+    font-size: 90%;
+}
+
+td{
+    font-size: 90%;
+}
+
+body{
+    font-size: small;
+}
+
+.centrer{
+    text-align: center;
+}
+
+.center-div{
+    margin: 0 auto;
+    width: 100px; 
+}
+
+input:invalid{
+    border: 2px solid black;
+    background-color: red;
+}

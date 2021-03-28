@@ -1,2 +1,27 @@
+@import "https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css";
 #infosProduct { text-align: center; }
 ul { list-style-type: none; }
+
+.box {
+    position: absolute;
+    background: turquoise;
+    text-align: center;
+    font-family: "Snell Roundhand", "Noteworthy", "Times New Roman";
+    color: white;
+    top: 50%; left: 50%; /* à 50%/50% du parent référent */
+    transform: translate(-50%, -50%); 
+    font-size: large;
+    font-style: italic;
+  }
+
+h2{
+    text-decoration: underline;
+    text-decoration-color: red;
+    color: black;
+    font-style: normal;
+}
+
+detail{
+  color: black;
+  font-style:normal;
+}

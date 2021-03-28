@@ -10,6 +10,7 @@ import { StockService } from '../services/stock.service';
 export class ListeProductComponent implements OnInit {
 
   produits: any;
+  
 
   crustaces: any; // Category : 2
   fruitsDeMer: any;  // Category : 1
@@ -73,7 +74,13 @@ export class ListeProductComponent implements OnInit {
     for (let id in this.modifStock) {
       const val = this.modifStock[id]["val"];
       const oldval = this.modifStock[id]["oldval"];
-      if (val < 0 && -val <= oldval){ 
+      if ( oldval+val < 0 || val > 100 || this.isNotInt(val)){
+        const error = document.getElementById('errorStock'+id);
+        error.textContent = "Rentrez un nombre entier entre -" + oldval + "et 100";
+        error.style.color = "red";
+        check= -1;
+      }
+      else if (val < 0 && -val <= oldval){ 
         this.stockService.diminuerStock(parseInt(id), -val).subscribe();
         const error = document.getElementById('errorStock'+id);
         error.textContent = "";
@@ -82,13 +89,7 @@ export class ListeProductComponent implements OnInit {
         this.stockService.augmenterStock(parseInt(id), val).subscribe();
         const error = document.getElementById('errorStock'+id);
         error.textContent = "";
-      }
-      else if ( oldval+val < 0 || val > 100){
-        const error = document.getElementById('errorStock'+id);
-        error.textContent = "Rentrez un nombre entre -" + oldval + "et 100";
-        error.style.color = "red";
-        check= -1;
-      }
+      }  
     }
 
     for (let id in this.modifPromo) {
@@ -109,6 +110,7 @@ export class ListeProductComponent implements OnInit {
         error.style.color = "red";
         check= -1;
       }
+      
 
     }
     if(check==0){
@@ -117,16 +119,9 @@ export class ListeProductComponent implements OnInit {
     }
   }
 
-  errorMessage() {
-    const error = document.getElementById("error")
-    if (parseFloat((document.getElementById("number") as HTMLInputElement).value) > 0) 
-    {
-          
-        // Changing content and color of content
-        error.textContent = "Please enter a valid number"
-        error.style.color = "red"
-    } else {
-        error.textContent = ""
-    }
+  isNotInt(num: number){
+    if((num%1) !=0){ return true; }
+    return false;
+  }
 }
-}
+

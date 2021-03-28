@@ -1,36 +1,52 @@
-<input type="text" (keyup)="getCorrespondance($event)" id="choixProduit" /><!-- list="autocompleteListe" -->
 
-<div id="correspondance">
-  <ul>
-    <li *ngFor="let cl of correspondanceListe" (click)="getChoix(cl.id)">{{ cl.name }} ({{ cl.id }})</li>
-  </ul>
+<div class="box">
+  <div class="dropdown is-hoverable">
+    <div class="dropdown-trigger">
+      <button class="button is-info" aria-haspopup="true" aria-controls="dropdown-menu3" id="correspondance">
+        <span>Sélectionnez un produit</span>
+        <span class="icon is-small">
+          <i class="fas fa-angle-down" aria-hidden="true"></i>
+        </span>
+      </button>
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu3" role="menu">
+      <div class="dropdown-content">
+        <div *ngFor="let p of produits">
+        <a class="dropdown-item" (click)="getChoix(p.id)">
+            {{ p.name }}
+        </a>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+
+  <div *ngIf="produit; else elseBlock">
+    <h2>Le détail du produit sélectionné :</h2>
+    <ul>
+      <li><detail>Nom :</detail> {{ produit.name }}</li>
+      <li><detail>Prix :</detail> {{ produit.price }}€</li>
+      <li *ngIf="produit.sale"><detail>Prix en promotion :</detail> {{ produit.price_on_sale }}</li>
+      <li><detail>Pourcentage de promotion :</detail> {{ produit.discount }}%</li>
+      <li><detail>Quantité en stock :</detail> {{ produit.quantityInStock }}</li>
+      <li><detail>Nombre de vendus :</detail> {{ produit.quantity_sold }}</li>
+      <li><detail>Commentaires :</detail> {{ produit.comments }}</li>
+    </ul>
+
+    <label for="unite"><detail>Unités :</detail></label>
+    <input type="number" name="unite" id="unite" min="0" [(ngModel)]="unite" />
+
+    <button class="button is-success is-outlined is-rounded is-small" (click)="plus(produit.id, unite)">Augmenter Stock</button>
+    <button class="button is-danger is-outlined is-rounded is-small" (click)="moins(produit.id, unite)" [disabled]="unite > produit.quantityInStock">Diminuer Stock</button>
+
+    <br>
+
+    <label for="pourcentPromo"><detail>Pourcentage de promotion :</detail></label>
+    <input type="number" name="pourcentPromo" id="pourcentPromo" min="0" max="100" [(ngModel)]="pourcentPromo" />
+
+    <button class="button is-warning is-outlined is-rounded is-small" (click)="promo(produit.id, pourcentPromo)" [disabled]="pourcentPromo == produit.discount">Changer la promotion</button>
+
+    <p *ngIf="unite < 0">La valeur ne peut pas être négative.</p>
+  </div>
+  <ng-template #elseBlock><p>Aucun produit sélectionné.</p></ng-template>
 </div>
-
-<h2>Le détail du produit sélectionné :</h2>
-<div *ngIf="produit; else elseBlock">
-  <ul>
-    <li>Nom : {{ produit.name }}</li>
-    <li>Prix : {{ produit.price }}€</li>
-    <li *ngIf="produit.sale">Prix en promotion : {{ produit.price_on_sale }}</li>
-    <li>Pourcentage de promotion : {{ produit.discount }}%</li>
-    <li>Quantité en stock : {{ produit.quantityInStock }}</li>
-    <li>Nombre de vendus : {{ produit.quantity_sold }}</li>
-    <li>Commentaires : {{ produit.comments }}</li>
-  </ul>
-
-  <label for="unite">Unités :</label>
-  <input type="number" name="unite" id="unite" min="0" [(ngModel)]="unite" />
-
-  <button (click)="plus(produit.id, unite)">Augmenter Stock</button>
-  <button (click)="moins(produit.id, unite)" [disabled]="unite > produit.quantityInStock">Diminuer Stock</button>
-
-  <br>
-
-  <label for="pourcentPromo">Pourcentage de promotion :</label>
-  <input type="number" name="pourcentPromo" id="pourcentPromo" min="0" max="100" [(ngModel)]="pourcentPromo" />
-
-  <button (click)="promo(produit.id, pourcentPromo)" [disabled]="pourcentPromo == produit.discount">Changer la promotion</button>
-
-  <p *ngIf="unite < 0">La valeur ne peut pas être négative.</p>
-</div>
-<ng-template #elseBlock><p>Aucun produit sélectionné.</p></ng-template>

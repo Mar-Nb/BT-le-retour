@@ -14,23 +14,23 @@ export class DashboardComponent implements OnInit {
     "Juillet", "Août", "Septembre",
     "Octobre", "Novembre", "Décembre"
   ];
+  tabTrimestre = [];
   typeCalculCA = ["annee", "trimestre", "mois", "semaine", "jour"];
 
-  selectAnnee: number;
+  selectAnnee: number = (new Date()).getFullYear();
   selectMois: number = 1;
+  selectTrimestre: number = 1;
   selectJour: number;
 
   current = { annee: true, trimestre: false, mois: false, semaine: false, jour: false };
 
-  transactionParMois = {
-    janvier: [], fevrier: [], mars: [],
-    avril: [], mai: [], juin: [],
-    juillet: [], aout: [], septembre: [],
-    octobre: [], novembre: [], decembre: []
-  };
   dataAnnee = [
     { data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], label: " " }
   ];
+  dataTrimestre = [
+    { data: [0, 0, 0], label: " " }
+  ];
+
 
   barChartOptions = {
     scaleShowVerticalLines: false,
@@ -45,6 +45,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     const aujourdhui = new Date();
     this.getBoardAnnee(aujourdhui.getFullYear());
+    this.getBoardTrimestre(aujourdhui.getFullYear(), this.selectTrimestre);
   }
 
   toggleCurrent(event: any, typeCurrent: string) {
@@ -61,68 +62,84 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  repartitionTransactionMois(t: any) {
+  repartitionTransactionAnnee(t: any) {
     for (let transac of t) {
       const dateTransac = new Date(transac.date);
       const valeur = transac.price * transac.quantity;
-      switch(dateTransac.getMonth()) {
-        case 0:
-          this.transactionParMois.janvier.push(valeur);
-          this.dataAnnee[0].data[0] += valeur;
-          break;
+
+      switch (dateTransac.getMonth()) {
+        case 0: this.dataAnnee[0].data[0] += valeur; break;
+        case 1: this.dataAnnee[0].data[1] += valeur; break;
+        case 2: this.dataAnnee[0].data[2] += valeur; break;
+        case 3: this.dataAnnee[0].data[3] += valeur; break;
+        case 4: this.dataAnnee[0].data[4] += valeur; break;
+        case 5: this.dataAnnee[0].data[5] += valeur; break;
+        case 6: this.dataAnnee[0].data[6] += valeur; break;
+        case 7: this.dataAnnee[0].data[7] += valeur; break;
+        case 8: this.dataAnnee[0].data[8] += valeur; break;
+        case 9: this.dataAnnee[0].data[9] += valeur; break;
+        case 10: this.dataAnnee[0].data[10] += valeur; break;
+        case 11: this.dataAnnee[0].data[11] += valeur; break;
+      }
+    }
+  }
+
+  repartitionTransactionTrimestre(t: any, trim: number) {
+    for (let transac of t) {
+      const dateTransac = new Date(transac.date);
+      const valeur = transac.price * transac.quantity;
+
+      // NOTE: Pour une raison étrange, trim est devenu une string pendant le processus d'appel
+      switch (parseInt(trim.toString())) {
         case 1:
-          this.transactionParMois.fevrier.push(valeur);
-          this.dataAnnee[0].data[1] += valeur;
-          break;
+          switch (dateTransac.getMonth()) {
+            case 0: this.dataTrimestre[0].data[0] += valeur; break;
+            case 1: this.dataTrimestre[0].data[1] += valeur; break;
+            case 2: this.dataTrimestre[0].data[2] += valeur; break;
+          }
+          this.tabTrimestre = ["Janvier", "Février", "Mars"]; break;
+
         case 2:
-          this.transactionParMois.mars.push(valeur);
-          this.dataAnnee[0].data[2] += valeur;
-          break;
+          switch (dateTransac.getMonth()) {
+            case 3: this.dataTrimestre[0].data[0] += valeur; break;
+            case 4: this.dataTrimestre[0].data[1] += valeur; break;
+            case 5: this.dataTrimestre[0].data[2] += valeur; break;
+          }
+          this.tabTrimestre = ["Avril", "Mai", "Juin"]; break;
+
         case 3:
-          this.transactionParMois.avril.push(valeur);
-          this.dataAnnee[0].data[3] += valeur;
-          break;
+          switch (dateTransac.getMonth()) {
+            case 6: this.dataTrimestre[0].data[0] += valeur; break;
+            case 7: this.dataTrimestre[0].data[1] += valeur; break;
+            case 8: this.dataTrimestre[0].data[2] += valeur; break;
+          }
+          console.log("trim 3");
+          this.tabTrimestre = ["Juillet", "Août", "Septembre"]; break;
+
         case 4:
-          this.transactionParMois.mai.push(valeur);
-          this.dataAnnee[0].data[4] += valeur;
-          break;
-        case 5:
-          this.transactionParMois.juin.push(valeur);
-          this.dataAnnee[0].data[5] += valeur;
-          break;
-        case 6:
-          this.transactionParMois.juillet.push(valeur);
-          this.dataAnnee[0].data[6] += valeur;
-          break;
-        case 7:
-          this.transactionParMois.aout.push(valeur);
-          this.dataAnnee[0].data[7] += valeur;
-          break;
-        case 8:
-          this.transactionParMois.septembre.push(valeur);
-          this.dataAnnee[0].data[8] += valeur;
-          break;
-        case 9:
-          this.transactionParMois.octobre.push(valeur);
-          this.dataAnnee[0].data[9] += valeur;
-          break;
-        case 10:
-          this.transactionParMois.novembre.push(valeur);
-          this.dataAnnee[0].data[10] += valeur;
-          break;
-        case 11:
-          this.transactionParMois.decembre.push(valeur);
-          this.dataAnnee[0].data[11] += valeur;
-          break;
+          switch (dateTransac.getMonth()) {
+            case 9: this.dataTrimestre[0].data[0] += valeur; break;
+            case 10: this.dataTrimestre[0].data[1] += valeur; break;
+            case 11: this.dataTrimestre[0].data[2] += valeur; break;
+          }
+          this.tabTrimestre = ["Octobre", "Novembre", "Décembre"]; break;
+
+        default: console.log("starf");
       }
     }
 
-    // NOTE: Ligne nécessaire pour mettre à jour les valeurs du graphique
-    this.dataAnnee = this.dataAnnee.slice();
+    // NOTE: Ligne nécessaire pour mettre à jour les valeurs du graphique,
+    // qui sont null à l'initialisation du composant
+    // this.updateGraph()
   }
 
   afficheSelection() {
-    if (this.current.annee) { this.getBoardAnnee(this.selectAnnee); }
+    if (this.current.annee && this.selectAnnee > 0) { this.getBoardAnnee(this.selectAnnee); }
+    else if (this.current.trimestre && this.selectAnnee > 0) {
+      this.getBoardTrimestre(this.selectAnnee, this.selectTrimestre);
+    }
+
+    this.updateGraph()
   }
 
   getBoardAnnee(annee: number) {
@@ -130,15 +147,39 @@ export class DashboardComponent implements OnInit {
 
     this.transacService.getTransactionAnnee(annee).subscribe(
       (res) => {
+        // Si des transactions existe pour l'année sélectionnée
         if (res[0]) {
           this.dataAnnee[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-          this.dataAnnee[0].label = "Année " + annee.toString();
+          this.dataAnnee[0].label = "Année " + annee;
           transactions = res;
 
-          this.repartitionTransactionMois(transactions);
+          this.repartitionTransactionAnnee(transactions);
         } else { alert("Pas de data pour cette année."); }
       },
       (err) => { alert("Erreur API: " + err.message); }
     );
+  }
+
+  getBoardTrimestre(annee: number, trimestre: number) {
+    let transactions: any = [];
+
+    this.transacService.getTransactionTrimestre(annee, trimestre).subscribe(
+      (res) => {
+        if (res[0]) {
+          this.dataTrimestre[0].data = [0, 0, 0];
+          this.dataTrimestre[0].label = "Trimestre " + trimestre;
+          this.tabTrimestre = [];
+          transactions = res;
+
+          this.repartitionTransactionTrimestre(transactions, trimestre);
+        } else { alert("Pas de data pour ce trimestre."); }
+      },
+      (err) => { alert("Erreur API: " + err.message); }
+    );
+  }
+
+  updateGraph() {
+    this.dataAnnee = this.dataAnnee.slice();
+    this.dataTrimestre = this.dataTrimestre.slice();
   }
 }

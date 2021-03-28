@@ -1,17 +1,18 @@
 <div class="column is-half-is-offset-one-quarter">
   <div class="tabs is-centered is-boxed">
     <ul>
-      <li id="tab-annee" class="is-active" (click)="toggleCurrent($event, 'annee')"><a>Année</a></li>
-      <li id="tab-trimestre" (click)="toggleCurrent($event, 'trimestre')"><a>Trimestre</a></li>
-      <li id="tab-mois" (click)="toggleCurrent($event, 'mois')"><a>Mois</a></li>
-      <li id="tab-semaine" (click)="toggleCurrent($event, 'semaine')"><a>Semaines</a></li>
-      <li id="tab-jour" (click)="toggleCurrent($event, 'jour')"><a>Jour</a></li>
+      <li id="tab-annee" class="is-active" (click)="toggleCurrent($event, 'annee'); updateGraph()"><a>Année</a></li>
+      <li id="tab-trimestre"
+        (click)="toggleCurrent($event, 'trimestre'); updateGraph()"><a>Trimestre</a></li>
+      <li id="tab-mois" (click)="toggleCurrent($event, 'mois'); updateGraph()"><a>Mois</a></li>
+      <li id="tab-semaine" (click)="toggleCurrent($event, 'semaine'); updateGraph()"><a>Semaines</a></li>
+      <li id="tab-jour" (click)="toggleCurrent($event, 'jour'); updateGraph()"><a>Jour</a></li>
     </ul>
   </div>
 
-  <div class="field is-horizontal">
+  <div class="container field is-horizontal">
     <div class="field-label is-normal">
-      <label class="label">Année, mois et jour</label>
+      <label class="label">Choix de la date</label>
     </div>
     <div class="field-body">
 
@@ -19,6 +20,15 @@
         <p class="control is-expanded">
           <input id="field-annee" type="number" min="0" class="input" placeholder="Année" [(ngModel)]="selectAnnee">
         </p>
+      </div>
+
+      <div class="select" style="margin-right: 0.75rem;">
+        <select [(ngModel)]="selectTrimestre" [disabled]="! current.trimestre">
+          <option value="1">Trimestre 1</option>
+          <option value="2">Trimestre 2</option>
+          <option value="3">Trimestre 3</option>
+          <option value="4">Trimestre 4</option>
+        </select>
       </div>
 
       <div class="select" style="margin-right: 0.75rem;">
@@ -37,7 +47,7 @@
       </div>
     </div>
 
-    <button class="button is-primary" (click)="afficheSelection()">Afficher</button>
+    <button class="button is-primary" style="margin-left: 0.75rem;" (click)="afficheSelection()">Afficher</button>
   </div>
 
   <div id="annee" class="content">
@@ -53,6 +63,13 @@
 
   <div id="trimestre" class="content hidden">
     <p>"Trimestre"</p>
+    <div class="columns">
+      <div class="column is-half is-offset-one-quarter">
+        <app-bar-chart
+          [barChartLabels]="tabTrimestre"
+          [barChartData]="dataTrimestre"></app-bar-chart>
+      </div>
+    </div>
   </div>
 
   <div id="mois" class="content hidden">

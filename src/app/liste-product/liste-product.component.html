@@ -5,7 +5,7 @@
       <p>Liste des Produits</p>
     </div>
     <div class="column is-half is-offset-one-quarter">
-      <table class="table is-narrow is-hoverable has-background-primary has-text-white">
+      <table class="table is-narrow is-hoverable has-background-primary">
         <thead>
           <th colspan="9">Crustacés</th>
           <tr>
@@ -42,12 +42,12 @@
             <td style="width: 10px;">{{ c.quantity_sold }}</td>
             <td style="width: 10px;">{{ c.comments }}</td>
             <td style="width: 1%;">
-              <input type="number" name="stockCrustace{{ c.id }}" min="0" max="100" id="stock{{ c.id }}"
-                (focusout)="stockModif(c.id, c.quantityInStock)" minlength="0" maxlength="100"><span id="errorStock{{ c.id  }}"></span>
+              <input type="number" name="stockCrustace{{ c.id }}" min="0" max="100" id="stock{{ c.id }}" placeholder="Quantité"
+                (focusout)="stockModif(c.id, c.quantityInStock)" minlength="0" maxlength="100"><p id="errorStock{{ c.id  }}"></p>
             </td>
             <td style="width:10px">
-              <input type="number" name="pourcentPromo{{ c.id }}" min="0" max="100" id="promo{{ c.id }}"
-                (focusout)="promoModif(c.id)" step="0.01 " minlength="0.00" maxlength="99.99"><span id="errorPromo{{ c.id }}"></span>
+              <input type="number" name="pourcentPromo{{ c.id }}" min="0" max="99.99" placeholder="%" id="promo{{ c.id }}"
+                (focusout)="promoModif(c.id)" step="0.01 " minlength="0.00" maxlength="99.99"><p id="errorPromo{{ c.id }}"></p>
             </td>
           </tr>
       </table>
@@ -93,12 +93,12 @@
             <td>{{ fdm.quantity_sold }}</td>
             <td>{{ fdm.comments }}</td>
             <td>
-              <input type="number" name="stockFdm{{ fdm.id }}" min="0" max="100" id="stock{{ fdm.id }}"
-                (focusout)="stockModif(fdm.id, fdm.quantityInStock)" minlength="0" maxlength="100"><span id="errorStock{{ fdm.id }}"></span>
+              <input type="number" name="stockFdm{{ fdm.id }}" min="0" max="100" placeholder="Quantité"  id="stock{{ fdm.id }}"
+                (focusout)="stockModif(fdm.id, fdm.quantityInStock)" minlength="0" maxlength="100"><p id="errorStock{{ fdm.id }}"></p>
             </td>
             <td>
-              <input type="number" name="pourcentPromo{{ fdm.id }}" min="0" max="100" id="promo{{ fdm.id }}"
-                (focusout)="promoModif(fdm.id)" step="0.01 " minlength="0.00" maxlength="99.99"><span id="errorPromo{{ fdm.id }}"></span>
+              <input type="number" name="pourcentPromo{{ fdm.id }}" step="0.01" min="0.00" max="99.99" placeholder="%" id="promo{{ fdm.id }}"
+                (focusout)="promoModif(fdm.id)"  minlength="0.00" maxlength="99.99"><p id="errorPromo{{ fdm.id }}"></p>
             </td>
           </tr>
         </table>
@@ -142,12 +142,12 @@
             <td>{{ p.quantity_sold }}</td>
             <td>{{ p.comments }}</td>
             <td>
-              <input type="number" width="10px" name="stockPoisson{{ p.id }}" min="-{{ p.quantityInStock }}" max="100" id="stock{{ p.id }}"
-                (focusout)="stockModif(p.id, p.quantityInStock)" minlength="0" maxlength="100"><span id="errorStock{{p.id }}"></span>
+              <input type="number" width="10px" name="stockPoisson{{ p.id }}" min="-{{ p.quantityInStock }}" max="100" placeholder="Quantité" id="stock{{ p.id }}"
+                (focusout)="stockModif(p.id, p.quantityInStock)" minlength="0" maxlength="100"><p id="errorStock{{p.id }}"></p>
             </td>
             <td>
-              <input type="number" name="pourcentPromo{{ p.id }}" min="0.00" max="99.99" id="promo{{ p.id }}"
-                (focusout)="promoModif(p.id)" step="0.01 " minlength="0.00" maxlength="99.99"><span id="errorPromo{{p.id }}"></span>
+              <input type="number" name="pourcentPromo{{ p.id }}" min="0.00" max="99.99" placeholder="%" id="promo{{ p.id }}"
+                (focusout)="promoModif(p.id)" step="0.01 " minlength="0.00" maxlength="99.99"><p id="errorPromo{{p.id }}"></p>
             </td>
           </tr>
         </table>

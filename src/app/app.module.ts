@@ -11,19 +11,32 @@ import { FormsModule } from "@angular/forms";
 import { ListeProductComponent } from './liste-product/liste-product.component';
 import { HeaderComponent } from './header/header.component';
 
+import { ChartsModule } from "ng2-charts";
+import { BarChartComponent } from './chart/bar-chart/bar-chart.component';
+import { DonutChartComponent } from './chart/donut-chart/donut-chart.component';
+import { PieChartComponent } from './chart/pie-chart/pie-chart.component';
+import { LineChartComponent } from './chart/line-chart/line-chart.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     DetailsProductComponent,
     HomeComponent,
     ListeProductComponent,
-    HeaderComponent
+    HeaderComponent,
+    BarChartComponent,
+    DonutChartComponent,
+    PieChartComponent,
+    LineChartComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

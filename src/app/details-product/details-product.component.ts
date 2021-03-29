@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductsService } from "../services/products.service";
 import { StockService } from '../services/stock.service';
+import { TransactionService } from '../services/transaction.service';
 
 @Component({
   selector: 'app-details-product',
@@ -11,17 +12,29 @@ export class DetailsProductComponent implements OnInit {
 
   produits: any;
   produit: any;
-  correspondanceListe: any = [] ;
+  correspondanceListe: any = [];
   unite: number;
+  operation: string = "ajout";
 
   pourcentPromo: number;
 
-  constructor(public produitsService: ProductsService, public stockService: StockService) { this.produits = []; }
+  constructor(public produitsService: ProductsService,
+    public stockService: StockService,
+    public transacService: TransactionService) { this.produits = []; }
 
   ngOnInit(): void {
     this.produitsService.getData().subscribe(
       (res) => {
         this.produits = res;
+
+        for (let p of this.produits) {
+          if (p.sale && p.discount > 0) {
+            p.price_on_sale = p.price * (1 - p.discount / 100);
+
+            // Number.toFixed() permet de garder 2 décimales, mais renvoie un string
+            p.price_on_sale = p.price_on_sale.toFixed(2);
+          }
+        }
       },
       (err) => { alert("Failed loading JSON data : " + err.message); });
   }
@@ -32,11 +45,11 @@ export class DetailsProductComponent implements OnInit {
 
   getCorrespondance(event: any) {
     this.correspondanceListe = [];
-    const texte : string = event.target.value;
+    const texte: string = event.target.value;
 
     if (texte.length > 2) {
       this.produits.forEach(element => {
-        const verif : string = element.name;
+        const verif: string = element.name;
         if (verif.toLowerCase().match(texte.toLowerCase())) { this.correspondanceListe.push(element); }
       });
     }
@@ -47,7 +60,13 @@ export class DetailsProductComponent implements OnInit {
   plus(id: number, unite: number) {
     if (unite != null) {
       this.stockService.augmenterStock(id, unite).subscribe(
-        (prod) => { this.produit = prod; },
+        (prod) => {
+          this.produit = prod;
+          this.transacService.enregistrerTransaction(this.produit.tigID,
+            this.operation,
+            this.produit.price,
+            unite.toString()).subscribe();
+        },
         (err) => { alert("Problème API : " + err.message); }
       );
     } else {
@@ -59,7 +78,13 @@ export class DetailsProductComponent implements OnInit {
   moins(id: number, unite: number) {
     if (unite != null) {
       this.stockService.diminuerStock(id, unite).subscribe(
-        (prod) => { this.produit = prod },
+        (prod) => {
+          this.produit = prod;
+          this.transacService.enregistrerTransaction(this.produit.tigID,
+            this.operation,
+            this.produit.price,
+            unite.toString()).subscribe();
+        },
         (err) => { alert("Problème API : " + err.message); }
       );
     } else {
@@ -72,7 +97,7 @@ export class DetailsProductComponent implements OnInit {
     if (newpromo == null) {
       // "newpromo" est un number, donc du texte dans l'input renvoie null
       alert("La promotion doit être un nombre.");
-    } else if (newpromo >= 0 && newpromo <=100) {
+    } else if (newpromo >= 0 && newpromo <= 100) {
       this.produitsService.setPromotion(id, newpromo).subscribe(
         (prod) => { this.produit = prod },
         (err) => { alert("Problème API : " + err.message); }

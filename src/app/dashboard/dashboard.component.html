@@ -1,0 +1,126 @@
+<div class="column is-half-is-offset-one-quarter">
+  <div class="tabs is-centered is-boxed">
+    <ul>
+      <li id="tab-annee" class="is-active" (click)="toggleCurrent($event, 'annee'); updateGraph()"><a>Année</a></li>
+      <li id="tab-trimestre"
+        (click)="toggleCurrent($event, 'trimestre'); updateGraph()"><a>Trimestre</a></li>
+      <li id="tab-mois" (click)="toggleCurrent($event, 'mois'); updateGraph()"><a>Mois</a></li>
+      <li id="tab-semaine" (click)="toggleCurrent($event, 'semaine'); updateGraph()"><a>Semaines</a></li>
+      <li id="tab-jour" (click)="toggleCurrent($event, 'jour'); updateGraph()"><a>Jour</a></li>
+    </ul>
+  </div>
+
+  <div class="container field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Choix de la date</label>
+    </div>
+    <div class="field-body">
+
+      <div class="field">
+        <p class="control is-expanded">
+          <input id="field-annee" type="number" min="0" class="input" placeholder="Année" [(ngModel)]="selectAnnee">
+        </p>
+      </div>
+
+      <div class="select" style="margin-right: 0.75rem;">
+        <select [(ngModel)]="selectTrimestre" [disabled]="! current.trimestre">
+          <option value="1">Trimestre 1</option>
+          <option value="2">Trimestre 2</option>
+          <option value="3">Trimestre 3</option>
+          <option value="4">Trimestre 4</option>
+        </select>
+      </div>
+
+      <div class="select" style="margin-right: 0.75rem;">
+        <select [(ngModel)]="selectMois" [disabled]="current.annee || current.trimestre">
+          <option *ngFor="let mois of tabAnnee; let index = index;" value="{{ index + 1 }}">
+            {{ mois }}
+          </option>
+        </select>
+      </div>
+
+      <div class="field">
+        <p class="control is-expanded">
+          <input id="field-jour" type="number" min="0" max="31"
+            class="input" placeholder="Jour" [disabled]="! current.jour" [(ngModel)]="selectJour">
+        </p>
+      </div>
+    </div>
+
+    <button class="button is-primary" style="margin-left: 0.75rem;" (click)="afficheSelection()">Afficher</button>
+  </div>
+
+  <div id="annee" class="content">
+    <div class="columns">
+      <div class="column is-half">
+        <app-bar-chart
+          [barChartLabels]="tabAnnee"
+          [barChartData]="dataAnnee"></app-bar-chart>
+      </div>
+      <div class="column is-half">
+        <div class="card has-background-warning has-text-black">
+          <div class="card-header">
+            <div class="card-header-title has-text-black is-uppercase">
+              Chiffre d'Affaire
+            </div>
+          </div>
+          <div class="card-content">
+            <p class="is-size-3">{{ ca.annee }} €</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="trimestre" class="content hidden">
+    <div class="columns">
+      <div class="column is-half">
+        <app-bar-chart
+          [barChartLabels]="tabTrimestre"
+          [barChartData]="dataTrimestre"></app-bar-chart>
+      </div>
+      <div class="column is-half">
+        <div class="card has-background-warning has-text-black">
+          <div class="card-header">
+            <div class="card-header-title has-text-black is-uppercase">
+              Chiffre d'Affaire
+            </div>
+          </div>
+          <div class="card-content">
+            <p class="is-size-3">{{ ca.trimestre }} €</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="mois" class="content hidden">
+    <div class="columns">
+      <div class="column is-half">
+        <app-bar-chart
+          [barChartLabels]="tabMois"
+          [barChartData]="dataMois"></app-bar-chart>
+      </div>
+      <div class="column is-half">
+        <div class="card has-background-warning has-text-black">
+          <div class="card-header">
+            <div class="card-header-title has-text-black is-uppercase">
+              Chiffre d'Affaire
+            </div>
+          </div>
+          <div class="card-content">
+            <p class="is-size-3">{{ ca.mois }} €</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="semaine" class="content hidden">
+    <p>"Semaine"</p>
+  </div>
+
+  <div id="jour" class="content hidden">
+    <p>"Jour"</p>
+  </div>
+</div>

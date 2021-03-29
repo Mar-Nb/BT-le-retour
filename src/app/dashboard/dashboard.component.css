@@ -1,0 +1,11 @@
+.hidden {
+  display: none;
+}
+
+div.field.is-horizontal {
+  max-width: 85%;
+}
+
+.content {
+  margin-top: 4rem;
+}

@@ -8,13 +8,14 @@ import { TransactionService } from '../services/transaction.service';
 })
 export class DashboardComponent implements OnInit {
 
-  tabMois = [
+  tabAnnee = [
     "Janvier", "Février", "Mars",
     "Avril", "Mai", "Juin",
     "Juillet", "Août", "Septembre",
     "Octobre", "Novembre", "Décembre"
   ];
   tabTrimestre = [];
+  tabMois = [];
   typeCalculCA = ["annee", "trimestre", "mois", "semaine", "jour"];
 
   selectAnnee: number = (new Date()).getFullYear();
@@ -30,7 +31,11 @@ export class DashboardComponent implements OnInit {
   dataTrimestre = [
     { data: [0, 0, 0], label: " " }
   ];
+  dataMois = [{
+    data: [], label: " "
+  }];
 
+  ca = { annee: 0, trimestre: 0, mois: 0, semaine: 0, jour: 0 };
 
   barChartOptions = {
     scaleShowVerticalLines: false,
@@ -46,6 +51,7 @@ export class DashboardComponent implements OnInit {
     const aujourdhui = new Date();
     this.getBoardAnnee(aujourdhui.getFullYear());
     this.getBoardTrimestre(aujourdhui.getFullYear(), this.selectTrimestre);
+    this.getBoardMois(aujourdhui.getFullYear(), this.selectMois);
   }
 
   toggleCurrent(event: any, typeCurrent: string) {
@@ -113,7 +119,6 @@ export class DashboardComponent implements OnInit {
             case 7: this.dataTrimestre[0].data[1] += valeur; break;
             case 8: this.dataTrimestre[0].data[2] += valeur; break;
           }
-          console.log("trim 3");
           this.tabTrimestre = ["Juillet", "Août", "Septembre"]; break;
 
         case 4:
@@ -127,16 +132,34 @@ export class DashboardComponent implements OnInit {
         default: console.log("starf");
       }
     }
+  }
 
-    // NOTE: Ligne nécessaire pour mettre à jour les valeurs du graphique,
-    // qui sont null à l'initialisation du composant
-    // this.updateGraph()
+  repartitionTransactionMois(t: any) {
+    let mois = [];
+
+    for (let transac of t) {
+      const dateTransac = new Date(transac.date);
+      const valeur = transac.price * transac.quantity;
+      const cle = dateTransac.getDate() + " " + this.tabAnnee[this.selectMois - 1];
+
+      if (mois[cle]) { mois[cle] += valeur; }
+      else { mois[cle] = valeur; }
+    }
+
+    for (let key in mois) {
+      this.dataMois[0].data.push(mois[key]);
+      this.tabMois.push(key);
+    }
+
+    this.dataMois[0].label = this.tabAnnee[this.selectMois - 1];
   }
 
   afficheSelection() {
     if (this.current.annee && this.selectAnnee > 0) { this.getBoardAnnee(this.selectAnnee); }
     else if (this.current.trimestre && this.selectAnnee > 0) {
       this.getBoardTrimestre(this.selectAnnee, this.selectTrimestre);
+    } else if (this.current.mois && this.selectAnnee > 0) {
+      this.getBoardMois(this.selectAnnee, this.selectMois);
     }
 
     this.updateGraph()
@@ -144,6 +167,7 @@ export class DashboardComponent implements OnInit {
 
   getBoardAnnee(annee: number) {
     let transactions: any = [];
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
     this.transacService.getTransactionAnnee(annee).subscribe(
       (res) => {
@@ -154,6 +178,7 @@ export class DashboardComponent implements OnInit {
           transactions = res;
 
           this.repartitionTransactionAnnee(transactions);
+          this.ca.annee = this.dataAnnee[0].data.reduce(reducer);
         } else { alert("Pas de data pour cette année."); }
       },
       (err) => { alert("Erreur API: " + err.message); }
@@ -162,6 +187,7 @@ export class DashboardComponent implements OnInit {
 
   getBoardTrimestre(annee: number, trimestre: number) {
     let transactions: any = [];
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
 
     this.transacService.getTransactionTrimestre(annee, trimestre).subscribe(
       (res) => {
@@ -172,13 +198,37 @@ export class DashboardComponent implements OnInit {
           transactions = res;
 
           this.repartitionTransactionTrimestre(transactions, trimestre);
+          this.ca.trimestre = this.dataTrimestre[0].data.reduce(reducer);
         } else { alert("Pas de data pour ce trimestre."); }
       },
       (err) => { alert("Erreur API: " + err.message); }
     );
   }
 
+  getBoardMois(annee: number, mois: number) {
+    let transactions: any = [];
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+
+    this.transacService.getTransactionMois(annee, mois).subscribe(
+      (res) => {
+        if (res[0]) {
+          this.dataMois[0].data = [];
+          this.dataMois[0].label = " ";
+          this.tabMois = [];
+          transactions = res;
+
+          this.repartitionTransactionMois(transactions);
+          this.ca.mois = this.dataMois[0].data.reduce(reducer);
+        } else { alert("Pas de data pour ce mois."); }
+      },
+      (err) => { alert("Erreur API: " + err.message); }
+    );
+  }
+
   updateGraph() {
+    // NOTE: Ligne nécessaire pour mettre à jour les valeurs du graphique,
+    // qui sont null à l'initialisation du composant
+
     this.dataAnnee = this.dataAnnee.slice();
     this.dataTrimestre = this.dataTrimestre.slice();
   }

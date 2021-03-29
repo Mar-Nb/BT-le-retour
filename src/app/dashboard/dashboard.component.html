@@ -33,7 +33,7 @@
 
       <div class="select" style="margin-right: 0.75rem;">
         <select [(ngModel)]="selectMois" [disabled]="current.annee || current.trimestre">
-          <option *ngFor="let mois of tabMois; let index = index;" value="{{ index + 1 }}">
+          <option *ngFor="let mois of tabAnnee; let index = index;" value="{{ index + 1 }}">
             {{ mois }}
           </option>
         </select>
@@ -51,29 +51,69 @@
   </div>
 
   <div id="annee" class="content">
-    <p>"Année"</p>
     <div class="columns">
-      <div class="column is-half is-offset-one-quarter">
+      <div class="column is-half">
         <app-bar-chart
-          [barChartLabels]="tabMois"
+          [barChartLabels]="tabAnnee"
           [barChartData]="dataAnnee"></app-bar-chart>
+      </div>
+      <div class="column is-half">
+        <div class="card has-background-warning has-text-black">
+          <div class="card-header">
+            <div class="card-header-title has-text-black is-uppercase">
+              Chiffre d'Affaire
+            </div>
+          </div>
+          <div class="card-content">
+            <p class="is-size-3">{{ ca.annee }} €</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <div id="trimestre" class="content hidden">
-    <p>"Trimestre"</p>
     <div class="columns">
-      <div class="column is-half is-offset-one-quarter">
+      <div class="column is-half">
         <app-bar-chart
           [barChartLabels]="tabTrimestre"
           [barChartData]="dataTrimestre"></app-bar-chart>
+      </div>
+      <div class="column is-half">
+        <div class="card has-background-warning has-text-black">
+          <div class="card-header">
+            <div class="card-header-title has-text-black is-uppercase">
+              Chiffre d'Affaire
+            </div>
+          </div>
+          <div class="card-content">
+            <p class="is-size-3">{{ ca.trimestre }} €</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <div id="mois" class="content hidden">
-    <p>"Mois"</p>
+    <div class="columns">
+      <div class="column is-half">
+        <app-bar-chart
+          [barChartLabels]="tabMois"
+          [barChartData]="dataMois"></app-bar-chart>
+      </div>
+      <div class="column is-half">
+        <div class="card has-background-warning has-text-black">
+          <div class="card-header">
+            <div class="card-header-title has-text-black is-uppercase">
+              Chiffre d'Affaire
+            </div>
+          </div>
+          <div class="card-content">
+            <p class="is-size-3">{{ ca.mois }} €</p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id="semaine" class="content hidden">

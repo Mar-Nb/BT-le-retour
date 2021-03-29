@@ -1,128 +1,160 @@
-<h1>Crustacés</h1>
+<!DOCTYPE html>
+<body>
+  <div>
+    <div class="titre">
+      <p>Liste des Produits</p>
+    </div>
+    <div class="column is-half is-offset-one-quarter">
+      <table class="table is-narrow is-hoverable has-background-primary">
+        <thead>
+          <th colspan="9">Crustacés</th>
+          <tr>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Prix en promotion</th>
+            <th>Pourcentage de promotion</th>
+            <th>Quantité en stock</th>
+            <th>Nombres d'articles vendus</th>
+            <th>Commentaires</th>
+            <th>Changer le stock</th>
+            <th>Changer la promotion</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Prix en promotion</th>
+            <th>Pourcentage de promotion</th>
+            <th>Quantité en stock</th>
+            <th >Nombres d'articles vendus</th>
+            <th>Commentaires</th>
+            <th>Changer le stock</th>
+            <th>Changer la promotion</th>
+          </tr>
+        </tfoot>
+          <tr *ngFor="let c of crustaces">
+            <td style="width: 10px;">{{ c.name }}</td>
+            <td style="width: 10px;">{{ c.price }}</td>
+            <td style="width: 10px;">{{ c.price_on_sale }}</td>
+            <td style="width: 10px;">{{ c.discount }}</td>
+            <td style="width: 10px;">{{ c.quantityInStock }}</td>
+            <td style="width: 10px;">{{ c.quantity_sold }}</td>
+            <td style="width: 10px;">{{ c.comments }}</td>
+            <td style="width: 1%;">
+              <input type="number" name="stockCrustace{{ c.id }}" min="0" max="100" id="stock{{ c.id }}" placeholder="Quantité"
+                (focusout)="stockModif(c.id, c.quantityInStock)" minlength="0" maxlength="100"><p id="errorStock{{ c.id  }}"></p>
+            </td>
+            <td style="width:10px">
+              <input type="number" name="pourcentPromo{{ c.id }}" min="0" max="99.99" placeholder="%" id="promo{{ c.id }}"
+                (focusout)="promoModif(c.id)" step="0.01 " minlength="0.00" maxlength="99.99"><p id="errorPromo{{ c.id }}"></p>
+            </td>
+          </tr>
+      </table>
+    </div>
 
-<table>
-  <tr>
-    <th>Nom</th>
-    <th>Prix</th>
-    <th>Prix en promotion</th>
-    <th>Pourcentage de promotion</th>
-    <th>Quantité en stock</th>
-    <th>Nombres d'articles vendus</th>
-    <th>Commentaires</th>
-    <th>Type de l'opération</th>
-    <th>Changer le stock</th>
-    <th>Changer la promotion</th>
-  </tr>
-  <tr *ngFor="let c of crustaces">
-    <td>{{ c.name }}</td>
-    <td>{{ c.price }}</td>
-    <td>{{ c.price_on_sale }}</td>
-    <td>{{ c.discount }}</td>
-    <td>{{ c.quantityInStock }}</td>
-    <td>{{ c.quantity_sold }}</td>
-    <td>{{ c.comments }}</td>
-    <td>
-      <select name="operation{{ c.tigID }}" id="operation{{ c.tigID }}"
-      (change)="nouvelleTransaction(c.id, c.tigID, c.price)">
-        <option value="ajout">Ajout</option>
-        <option value="vente">Retrait par vente</option>
-        <option value="invendu">Invendu(s)</option>
-      </select>
-    </td>
-    <td>
-      <input type="number" name="stockCrustace{{ c.id }}" id="stock{{ c.id }}"
-        (focusout)="stockModif(c.id, c.quantityInStock); nouvelleTransaction(c.id, c.tigID, c.price)">
-    </td>
-    <td>
-      <input type="number" name="pourcentPromo{{ c.id }}" id="promo{{ c.id }}"
-        (focusout)="promoModif(c.id)" min="0" max="100" step="0.01">
-    </td>
-  </tr>
-</table>
+    
+    <div class="columns">
+      <div class="column is-half">
+        <table class="table  is-narrow is-hoverable has-background-warning">
+          <thead>
+            <th colspan="9">Fruits de mer</th>
+            <tr>
+              <th>Nom</th>
+              <th>Prix</th>
+              <th>Prix en promotion</th>
+              <th>Pourcentage de promotion</th>
+              <th>Quantité en stock</th>
+              <th>Nombres d'articles vendus</th>
+              <th>Commentaires</th>
+              <th>Changer le stock</th>
+              <th>Changer la promotion</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Nom</th>
+              <th>Prix</th>
+              <th>Prix en promotion</th>
+              <th>Pourcentage de promotion</th>
+              <th>Quantité en stock</th>
+              <th >Nombres d'articles vendus</th>
+              <th>Commentaires</th>
+              <th>Changer le stock</th>
+              <th>Changer la promotion</th>
+            </tr>
+          </tfoot>
+          <tr *ngFor="let fdm of fruitsDeMer">
+            <td>{{ fdm.name }}</td>
+            <td>{{ fdm.price }}</td>
+            <td>{{ fdm.price_on_sale }}</td>
+            <td>{{ fdm.discount }}</td>
+            <td>{{ fdm.quantityInStock }}</td>
+            <td>{{ fdm.quantity_sold }}</td>
+            <td>{{ fdm.comments }}</td>
+            <td>
+              <input type="number" name="stockFdm{{ fdm.id }}" min="0" max="100" placeholder="Quantité"  id="stock{{ fdm.id }}"
+                (focusout)="stockModif(fdm.id, fdm.quantityInStock)" minlength="0" maxlength="100"><p id="errorStock{{ fdm.id }}"></p>
+            </td>
+            <td>
+              <input type="number" name="pourcentPromo{{ fdm.id }}" step="0.01" min="0.00" max="99.99" placeholder="%" id="promo{{ fdm.id }}"
+                (focusout)="promoModif(fdm.id)"  minlength="0.00" maxlength="99.99"><p id="errorPromo{{ fdm.id }}"></p>
+            </td>
+          </tr>
+        </table>
+      </div>
 
-<h1>Fruits de mer</h1>
-
-<table>
-  <tr>
-    <th>Nom</th>
-    <th>Prix</th>
-    <th>Prix en promotion</th>
-    <th>Pourcentage de promotion</th>
-    <th>Quantité en stock</th>
-    <th>Nombres d'articles vendus</th>
-    <th>Commentaires</th>
-    <th>Type de l'opération</th>
-    <th>Changer le stock</th>
-    <th>Changer la promotion</th>
-  </tr>
-  <tr *ngFor="let fdm of fruitsDeMer">
-    <td>{{ fdm.name }}</td>
-    <td>{{ fdm.price }}</td>
-    <td>{{ fdm.price_on_sale }}</td>
-    <td>{{ fdm.discount }}</td>
-    <td>{{ fdm.quantityInStock }}</td>
-    <td>{{ fdm.quantity_sold }}</td>
-    <td>{{ fdm.comments }}</td>
-    <td>
-      <select name="operation{{ fdm.tigID }}" id="operation{{ fdm.tigID }}"
-      (change)="nouvelleTransaction(fdm.id, fdm.tigID, fdm.price)">
-        <option value="ajout">Ajout</option>
-        <option value="vente">Retrait par vente</option>
-        <option value="invendu">Invendu(s)</option>
-      </select>
-    </td>
-    <td>
-      <input type="number" name="stockFdm{{ fdm.id }}" id="stock{{ fdm.id }}"
-        (focusout)="stockModif(fdm.id, fdm.quantityInStock); nouvelleTransaction(fdm.id, fdm.tigID, fdm.price)">
-    </td>
-    <td>
-      <input type="number" name="pourcentPromo{{ fdm.id }}" id="promo{{ fdm.id }}"
-        (focusout)="promoModif(fdm.id)" min="0" max="100" step="0.01">
-    </td>
-  </tr>
-</table>
-
-<h1>Poissons</h1>
-
-<table>
-  <tr>
-    <th>Nom</th>
-    <th>Prix</th>
-    <th>Prix en promotion</th>
-    <th>Pourcentage de promotion</th>
-    <th>Quantité en stock</th>
-    <th>Nombres d'articles vendus</th>
-    <th>Commentaires</th>
-    <th>Type de l'opération</th>
-    <th>Changer le stock</th>
-    <th>Changer la promotion</th>
-  </tr>
-  <tr *ngFor="let p of poissons">
-    <td>{{ p.name }}</td>
-    <td>{{ p.price }}</td>
-    <td>{{ p.price_on_sale }}</td>
-    <td>{{ p.discount }}</td>
-    <td>{{ p.quantityInStock }}</td>
-    <td>{{ p.quantity_sold }}</td>
-    <td>{{ p.comments }}</td>
-    <td>
-      <select name="operation{{ p.tigID }}" id="operation{{ p.tigID }}"
-      (change)="nouvelleTransaction(p.id, p.tigID, p.price)">
-        <option value="ajout">Ajout</option>
-        <option value="vente">Retrait par vente</option>
-        <option value="invendu">Invendu(s)</option>
-      </select>
-    </td>
-    <td>
-      <input type="number" name="stockPoisson{{ p.id }}" id="stock{{ p.id }}"
-        (focusout)="stockModif(p.id, p.quantityInStock); nouvelleTransaction(p.id, p.tigID, p.price)">
-    </td>
-    <td>
-      <input type="number" name="pourcentPromo{{ p.id }}" id="promo{{ p.id }}"
-        (focusout)="promoModif(p.id)" min="0" max="100" step="0.01">
-    </td>
-  </tr>
-</table>
-
-<button type="button" name="button" (click)="envoyerDonnees()">Envoyer données</button>
-<button type="button" name="button2" (click)="testTransac()">testTransac</button>
+      <div class="column">
+        <table class="table is-bordered is-striped is-narrow is-hoverable has-background-info">
+          <thead>
+            <th colspan="9">Poissons</th>
+            <tr>
+              <th>Nom</th>
+              <th>Prix</th>
+              <th>Prix en promotion</th>
+              <th>Pourcentage de promotion</th>
+              <th>Quantité en stock</th>
+              <th>Nombres d'articles vendus</th>
+              <th>Commentaires</th>
+              <th>Changer le stock</th>
+              <th>Changer la promotion</th>
+            </tr>
+          </thead>
+          <tfoot>
+            <tr>
+              <th>Nom</th>
+              <th>Prix</th>
+              <th>Prix en promotion</th>
+              <th>Pourcentage de promotion</th>
+              <th>Quantité en stock</th>
+              <th >Nombres d'articles vendus</th>
+              <th>Commentaires</th>
+              <th>Changer le stock</th>
+              <th>Changer la promotion</th>
+            </tr>
+          </tfoot>
+          <tr *ngFor="let p of poissons; let i in poissons.length">
+            <td>{{ p.name }}</td>
+            <td>{{ p.price }}</td>
+            <td>{{ p.price_on_sale }}</td>
+            <td>{{ p.discount }}</td>
+            <td>{{ p.quantityInStock }}</td>
+            <td>{{ p.quantity_sold }}</td>
+            <td>{{ p.comments }}</td>
+            <td>
+              <input type="number" width="10px" name="stockPoisson{{ p.id }}" min="-{{ p.quantityInStock }}" max="100" placeholder="Quantité" id="stock{{ p.id }}"
+                (focusout)="stockModif(p.id, p.quantityInStock)" minlength="0" maxlength="100"><p id="errorStock{{p.id }}"></p>
+            </td>
+            <td>
+              <input type="number" name="pourcentPromo{{ p.id }}" min="0.00" max="99.99" placeholder="%" id="promo{{ p.id }}"
+                (focusout)="promoModif(p.id)" step="0.01 " minlength="0.00" maxlength="99.99"><p id="errorPromo{{p.id }}"></p>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  <div class="centrer">
+    <button type="button" name="button" (click)="envoyerDonnees()" class="button is-outlined is-active is-info ">Modifier stock</button>
+  </div>
+  </div>    
+</body>

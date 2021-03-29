@@ -11,6 +11,7 @@ import { TransactionService } from '../services/transaction.service';
 export class ListeProductComponent implements OnInit {
 
   produits: any;
+  
 
   crustaces: any; // Category : 2
   fruitsDeMer: any;  // Category : 1
@@ -69,16 +70,16 @@ export class ListeProductComponent implements OnInit {
 
   stockModif(id: number, oldval: number) {
     // Valeur récupérée dans le champ de modification de la page HTML
-    const val = parseInt((document.getElementById("stock" + id) as HTMLInputElement).value);
+    const val = parseFloat((document.getElementById("stock" + id) as HTMLInputElement).value);
 
-    if (val != null && val != 0) { this.modifStock[id] = {"val": val, "oldval": oldval}; }
+    if (val != null && val != 0) { this.modifStock[id] = {"val": val, "oldval": oldval};}
   }
 
   promoModif(id: number) {
     // Valeur récupérée dans le champ de modification de la page HTML
     const val = parseFloat((document.getElementById("promo" + id) as HTMLInputElement).value);
 
-    if (val != null && (val >= 0 && val <= 100)) { this.modifPromo[id] = val; }
+    if (val != null) { this.modifPromo[id] = val; }
   }
 
   nouvelleTransaction(id: number, tigID: number, price: number) {
@@ -94,36 +95,58 @@ export class ListeProductComponent implements OnInit {
   }
 
   envoyerDonnees() {
+    var check= 0;
     for (let id in this.modifStock) {
       const val = this.modifStock[id]["val"];
       const oldval = this.modifStock[id]["oldval"];
-      if (val < 0 && -val <= oldval) {
+      if ( oldval+val < 0 || val > 100 || this.isNotInt(val)){
+        const error = document.getElementById('errorStock'+id);
+        error.textContent = "Rentrez un nombre entier entre -" + oldval + "et 100";
+        error.style.color = "red";
+        check= -1;
+      }
+      else if (val < 0 && -val <= oldval){ 
         this.stockService.diminuerStock(parseInt(id), -val).subscribe();
-        this.transacService.enregistrerTransaction(
-          this.transaction[id]["tigID"],
-          this.transaction[id]["type"],
-          this.transaction[id]["price"],
-          this.transaction[id]["quantity"]
-        ).subscribe();
+        const error = document.getElementById('errorStock'+id);
+        error.textContent = "";
       }
-      else if (val > 0) {
+      else if (val > 0 && val < 100) { 
         this.stockService.augmenterStock(parseInt(id), val).subscribe();
-        this.transacService.enregistrerTransaction(
-          this.transaction[id]["tigID"],
-          this.transaction[id]["type"],
-          this.transaction[id]["price"],
-          this.transaction[id]["quantity"]
-        ).subscribe();
-      }
+        const error = document.getElementById('errorStock'+id);
+        error.textContent = "";
+      }  
     }
 
     for (let id in this.modifPromo) {
       const val = this.modifPromo[id];
-      if (val == 0) { this.prodService.noPromo(parseInt(id)).subscribe(); }
-      else { this.prodService.setPromotion(parseInt(id), val).subscribe(); }
-    }
+      if (val == 0) { 
+        this.prodService.noPromo(parseInt(id)).subscribe();
+        const error = document.getElementById('errorPromo'+id);
+        error.textContent = ""; 
+      }
+      else if(val <100 && val > 0) { 
+        this.prodService.setPromotion(parseInt(id), val).subscribe();
+        const error = document.getElementById('errorPromo'+id);
+        error.textContent = "";
+      }
+      else{
+        const error = document.getElementById('errorPromo'+id);
+        error.textContent = "Rentrez un nombre entre 0 et 99.99";
+        error.style.color = "red";
+        check= -1;
+      }
+      
 
-    alert("Données envoyées !");
-    window.location.reload();
+    }
+    if(check==0){
+      alert("Données envoyées !");
+      window.location.reload();
+    }
+  }
+
+  isNotInt(num: number){
+    if((num%1) !=0){ return true; }
+    return false;
   }
 }
+

@@ -25,3 +25,12 @@ detail{
   color: black;
   font-style:normal;
 }
+
+.drop{
+  overflow-y: scroll;
+  margin-bottom: 24px;
+  border: 1px solid black;
+  width:  250px;
+  height: 250px;
+  background-color: turquoise;
+}

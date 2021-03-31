@@ -70,15 +70,21 @@ export class ListeProductComponent implements OnInit {
 
   stockModif(id: number, oldval: number) {
     // Valeur récupérée dans le champ de modification de la page HTML
-    const val = parseFloat((document.getElementById("stock" + id) as HTMLInputElement).value);
-
+    const check = (document.getElementById("stock" + id) as HTMLInputElement).value;
+    var val = parseFloat((document.getElementById("stock" + id) as HTMLInputElement).value);
+    if (check==''){
+      val= 0;
+    }
     if (val != null && val != 0) { this.modifStock[id] = {"val": val, "oldval": oldval};}
   }
 
   promoModif(id: number) {
     // Valeur récupérée dans le champ de modification de la page HTML
-    const val = parseFloat((document.getElementById("promo" + id) as HTMLInputElement).value);
-
+    const check = (document.getElementById("promo" + id) as HTMLInputElement).value;
+    var val = parseFloat((document.getElementById("promo" + id) as HTMLInputElement).value);
+    if (check==''){
+      val= null;
+    }
     if (val != null) { this.modifPromo[id] = val; }
   }
 

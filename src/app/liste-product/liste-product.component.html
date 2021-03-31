@@ -39,11 +39,11 @@
             <td style="width: 10px;">{{ c.quantity_sold }}</td>
             <td style="width: 10px;">{{ c.comments }}</td>
             <td style="width: 1%;">
-              <input type="number" name="stockCrustace{{ c.id }}" min="0" max="100" id="stock{{ c.id }}" placeholder="Quantité"
+              <input class="input is-success is-small" type="number" name="stockCrustace{{ c.id }}" min="-{{ c.quantityInStock }}" max="100" id="stock{{ c.id }}" placeholder="Quantité"
                 (focusout)="stockModif(c.id, c.quantityInStock)" minlength="0" maxlength="100"><p id="errorStock{{ c.id  }}"></p>
             </td>
             <td style="width:10px">
-              <input type="number" name="pourcentPromo{{ c.id }}" min="0" max="99.99" placeholder="%" id="promo{{ c.id }}"
+              <input class="input is-danger is-small" type="number" name="pourcentPromo{{ c.id }}" min="0" max="99.99" placeholder="%" id="promo{{ c.id }}"
                 (focusout)="promoModif(c.id)" step="0.01 " minlength="0.00" maxlength="99.99"><p id="errorPromo{{ c.id }}"></p>
             </td>
           </tr>
@@ -90,11 +90,11 @@
             <td>{{ fdm.quantity_sold }}</td>
             <td>{{ fdm.comments }}</td>
             <td>
-              <input type="number" name="stockFdm{{ fdm.id }}" min="0" max="100" placeholder="Quantité"  id="stock{{ fdm.id }}"
+              <input class="input is-success is-small" type="number" name="stockFdm{{ fdm.id }}" min="-{{ fdm.quantityInStock }}" max="100" placeholder="Quantité"  id="stock{{ fdm.id }}"
                 (focusout)="stockModif(fdm.id, fdm.quantityInStock)" minlength="0" maxlength="100"><p id="errorStock{{ fdm.id }}"></p>
             </td>
             <td>
-              <input type="number" name="pourcentPromo{{ fdm.id }}" step="0.01" min="0.00" max="99.99" placeholder="%" id="promo{{ fdm.id }}"
+              <input class="input is-danger is-small" type="number" name="pourcentPromo{{ fdm.id }}" step="0.01" min="0.00" max="99.99" placeholder="%" id="promo{{ fdm.id }}"
                 (focusout)="promoModif(fdm.id)"  minlength="0.00" maxlength="99.99"><p id="errorPromo{{ fdm.id }}"></p>
             </td>
           </tr>
@@ -139,11 +139,11 @@
             <td>{{ p.quantity_sold }}</td>
             <td>{{ p.comments }}</td>
             <td>
-              <input type="number" width="10px" name="stockPoisson{{ p.id }}" min="-{{ p.quantityInStock }}" max="100" placeholder="Quantité" id="stock{{ p.id }}"
+              <input class="input is-success is-small" type="number" name="stockPoisson{{ p.id }}" min="-{{ p.quantityInStock }}" max="100" placeholder="Quantité" id="stock{{ p.id }}"
                 (focusout)="stockModif(p.id, p.quantityInStock)" minlength="0" maxlength="100"><p id="errorStock{{p.id }}"></p>
             </td>
             <td>
-              <input type="number" name="pourcentPromo{{ p.id }}" min="0.00" max="99.99" placeholder="%" id="promo{{ p.id }}"
+              <input class="input is-danger is-small" type="number" name="pourcentPromo{{ p.id }}" min="0.00" max="99.99" placeholder="%" id="promo{{ p.id }}"
                 (focusout)="promoModif(p.id)" step="0.01 " minlength="0.00" maxlength="99.99"><p id="errorPromo{{p.id }}"></p>
             </td>
           </tr>

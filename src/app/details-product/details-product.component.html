@@ -10,8 +10,8 @@
       </button>
     </div>
     <div class="dropdown-menu" id="dropdown-menu3" role="menu">
-      <div class="dropdown-content">
-        <div *ngFor="let p of produits">
+      <div class="dropdown-content" class="drop">
+        <div *ngFor="let p of produits" >
         <a class="dropdown-item" (click)="getChoix(p.id)">
             {{ p.name }}
         </a>
